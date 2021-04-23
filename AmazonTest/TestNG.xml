@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="AmazonTest" verbose="1" parallel="methods" thread-count="1">
+    <test name="AmazonTest">
+        <groups>
+            <run>
+                <include name="WIPRO_TEST"></include>
+            </run>
+        </groups>
+        <classes>
+            <class name="SelectProductTest"></class>
+        </classes>
+    </test>
+</suite>
