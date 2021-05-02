@@ -1,12 +1,17 @@
 package Base;
 
 import io.appium.java_client.AppiumDriver;
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
@@ -14,15 +19,10 @@ import java.util.concurrent.TimeUnit;
 public class DriverFactory extends ReadConfig {
     public WebDriver driver;
     public DesiredCapabilities cap = new DesiredCapabilities();
-    //    private Properties properties;
-    public String ParentWindow;
 
     private static final String APP_PATH = System.getProperty("user.dir") + "/apps/Amazon_shopping.apk";
-    private static final String CHROME_DRIVER_PATH = System.getProperty("user.dir") + "/Drivers/chromedriver";
-    private static final String FIREFOX_DRIVER_PATH = System.getProperty("user.dir") + "/Drivers/geckodriver";
-    private static final String CHROME_PROPERTY = "webdriver.chrome.driver";
-    private static final String FIREFOX_PROPERTY = "webdriver.gecko.driver";
     private static final String HUB = "http://127.0.0.1:4723/wd/hub";
+    public static String REPORT_PATH;
 
 
 
@@ -53,31 +53,10 @@ public class DriverFactory extends ReadConfig {
         return (AppiumDriver)driver;
     }
 
-    public WebDriver launchWebDriver() {
-        System.out.println("Launching the Browser");
-        if (getData("browser").equals(Browsers.CHROME.name())) {
-            System.setProperty(CHROME_PROPERTY, CHROME_DRIVER_PATH);
-            return this.driver = new ChromeDriver();
-        } else if (getData("browser").equals(Browsers.FIREFOX.name())) {
-            System.setProperty(FIREFOX_PROPERTY, FIREFOX_DRIVER_PATH);
-            return driver = new FirefoxDriver();
-        } else {
-            return driver = null;
-        }
-    }
-
     public WebDriver getDriver() {
         return this.driver;
     }
 
-
-    public void initWebDriver() {
-        loadProperties(FilePath);
-        if (this.driver == null) {
-            this.launchWebDriver();
-        }
-
-    }
 
     public void initAppiumDriver() {
         loadProperties(FilePath);
@@ -93,9 +72,11 @@ public class DriverFactory extends ReadConfig {
         this.driver.quit();
     }
 
-    public static enum Browsers {
-        FIREFOX,
-        CHROME;
+    public static void copyFileUsingStream(File source1, File dest1, File source2, File dest2) throws IOException {
+        InputStream is = null;
+        OutputStream os = null;
+        FileUtils.copyFile(source1,dest1);
+        FileUtils.copyFile(source2,dest2);
     }
 
 
