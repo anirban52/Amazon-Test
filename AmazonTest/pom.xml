@@ -34,8 +34,19 @@
             <artifactId>java-client</artifactId>
             <version>7.3.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>reportng</artifactId>
+            <version>1.2.2</version>
+        </dependency>
+
 
     </dependencies>
+    <reporting>
+        <excludeDefaults>true</excludeDefaults>
+        <plugins>
+        </plugins>
+    </reporting>
     <build>
         <plugins>
             <plugin>
@@ -44,6 +55,9 @@
                 <version>2.22.2</version>
                 <configuration>
                     <reportsDirectory>${project.build.directory}/reports</reportsDirectory>
+
+
+
                 </configuration>
             </plugin>
             <plugin>

@@ -57,36 +57,38 @@ public class BasePage extends ReadConfig {
         }
     }
 
-    public void swipeDownTillElementFound(By by){
+    public void swipeUpTillElementFound(By by){
         Dimension dimension = driver.manage().window().getSize();
         io.appium.java_client.TouchAction action = new io.appium.java_client.TouchAction<>(driver);
         int pressX = (dimension.getWidth()) / 2;
-        int endY = (int) ((dimension.getHeight()) * 0.7);
-        int startY = (int) ((dimension.getHeight()) * 0.4);
+        int endY = 10;
+        int startY = (dimension.getHeight()/2);
         for (int swipeCount = 0; swipeCount < 15; swipeCount++) {
             try {
                 int countOfElement = driver.findElements(by).size();
-                if (countOfElement==0) {
+                if (countOfElement==0 || driver.findElement(by).getAttribute("displayed").equals("false")) {
                     throw new Exception();
                 }
                 break;
             } catch (Exception e) {
 
                 action.press(PointOption.point(pressX, startY)).
-                        waitAction(WaitOptions.waitOptions(Duration.ofMillis(1000))).moveTo(PointOption.point(pressX, endY))
-                        .release().perform();
+                        waitAction(new WaitOptions().withDuration(Duration.ofMillis(3000)))
+                        .moveTo(PointOption.point(pressX, endY))
+                        .release()
+                        .perform();
             }
         }
 
     }
 
-    public void swipeCentre(){
+    public void swipeCentreUp(){
 
         Dimension dimension = driver.manage().window().getSize();
         io.appium.java_client.TouchAction action = new io.appium.java_client.TouchAction<>(driver);
         int pressX = (dimension.getWidth()) / 2;
-        int endY = (int) ((dimension.getHeight()) * 0.8);
-        int startY = (int) ((dimension.getHeight()) * 0.2);
+        int endY = 10;
+        int startY = (int) ((dimension.getHeight())-10);
         action.press(PointOption.point(pressX, startY)).
                 waitAction(WaitOptions.waitOptions(Duration.ofMillis(1000))).moveTo(PointOption.point(pressX, endY))
                 .release().perform();
